@@ -208,6 +208,7 @@ void ngx_http_script_flush_complex_value(ngx_http_request_t *r,
 ngx_int_t ngx_http_complex_value(ngx_http_request_t *r,
     ngx_http_complex_value_t *val, ngx_str_t *value);
 ngx_int_t ngx_http_compile_complex_value(ngx_http_compile_complex_value_t *ccv);
+ngx_int_t ngx_http_compile_complex_value_wrap(ngx_http_compile_complex_value_t *ccv);
 char *ngx_http_set_complex_value_slot(ngx_conf_t *cf, ngx_command_t *cmd,
     void *conf);
 
@@ -219,6 +220,7 @@ char *ngx_http_set_predicate_slot(ngx_conf_t *cf, ngx_command_t *cmd,
 
 ngx_uint_t ngx_http_script_variables_count(ngx_str_t *value);
 ngx_int_t ngx_http_script_compile(ngx_http_script_compile_t *sc);
+ngx_int_t ngx_http_script_compile_wrap(ngx_http_script_compile_t *sc);
 u_char *ngx_http_script_run(ngx_http_request_t *r, ngx_str_t *value,
     void *code_lengths, size_t reserved, void *code_values);
 void ngx_http_script_flush_no_cacheable_variables(ngx_http_request_t *r,
@@ -227,6 +229,7 @@ void ngx_http_script_flush_no_cacheable_variables(ngx_http_request_t *r,
 void *ngx_http_script_start_code(ngx_pool_t *pool, ngx_array_t **codes,
     size_t size);
 void *ngx_http_script_add_code(ngx_array_t *codes, size_t size, void *code);
+void *ngx_http_script_add_code_wrap(ngx_array_t *codes, size_t size, void *code);
 
 size_t ngx_http_script_copy_len_code(ngx_http_script_engine_t *e);
 void ngx_http_script_copy_code(ngx_http_script_engine_t *e);
