@@ -14,7 +14,7 @@ static ngx_int_t ngx_http_script_init_arrays(ngx_http_script_compile_t *sc);
 static ngx_int_t ngx_http_script_done(ngx_http_script_compile_t *sc);
 static ngx_int_t ngx_http_script_add_copy_code(ngx_http_script_compile_t *sc,
     ngx_str_t *value, ngx_uint_t last);
-static ngx_int_t ngx_http_script_add_copy_code_warp(ngx_http_script_compile_t *sc,
+static ngx_int_t ngx_http_script_add_copy_code_wrap(ngx_http_script_compile_t *sc,
     ngx_str_t *value, ngx_uint_t last);
 static ngx_int_t ngx_http_script_add_var_code_wrap(ngx_http_script_compile_t *sc,
     ngx_str_t *name);
@@ -300,7 +300,7 @@ ngx_http_compile_complex_value_wrap(ngx_http_compile_complex_value_t *ccv)
     sc.conf_prefix = ccv->conf_prefix;
     sc.root_prefix = ccv->root_prefix;
 
-    if (ngx_http_script_compile(&sc) != NGX_OK) {
+    if (ngx_http_script_compile_wrap(&sc) != NGX_OK) {
         return NGX_ERROR;
     }
 
@@ -410,7 +410,7 @@ ngx_http_script_compile_wrap(ngx_http_script_compile_t *sc)
 
             sc->variables++;
 
-            if (ngx_http_script_add_var_code(sc, &name) != NGX_OK) {
+            if (ngx_http_script_add_var_code_wrap(sc, &name) != NGX_OK) {
                 return NGX_ERROR;
             }
 
@@ -453,7 +453,7 @@ ngx_http_script_compile_wrap(ngx_http_script_compile_t *sc)
 
         sc->size += name.len;
 
-        if (ngx_http_script_add_copy_code(sc, &name, (i == sc->source->len))
+        if (ngx_http_script_add_copy_code_wrap(sc, &name, (i == sc->source->len))
             != NGX_OK)
         {
             return NGX_ERROR;
@@ -470,7 +470,7 @@ invalid_variable:
 }
 
 static ngx_int_t
-ngx_http_script_add_copy_code_warp(ngx_http_script_compile_t *sc, ngx_str_t *value,
+ngx_http_script_add_copy_code_wrap(ngx_http_script_compile_t *sc, ngx_str_t *value,
     ngx_uint_t last)
 {
     u_char                       *p;
@@ -2073,7 +2073,7 @@ ngx_http_script_set_var_code(ngx_http_script_engine_t *e)
     cmcf = ngx_http_get_module_main_conf(r, ngx_http_core_module);
 
     v = cmcf->variables.elts;
-    
+
     ngx_log_debug1(NGX_LOG_DEBUG_HTTP, e->request->connection->log, 0,
                    "http script set $%V", &v[code->index].name);
 
