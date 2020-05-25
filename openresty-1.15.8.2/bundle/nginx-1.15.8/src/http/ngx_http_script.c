@@ -2073,6 +2073,9 @@ ngx_http_script_set_var_code(ngx_http_script_engine_t *e)
     cmcf = ngx_http_get_module_main_conf(r, ngx_http_core_module);
 
     v = cmcf->variables.elts;
+    
+    ngx_log_debug1(NGX_LOG_DEBUG_HTTP, e->request->connection->log, 0,
+                   "http script set $%V", &v[code->index].name);
 
     }
 #endif
